@@ -4,7 +4,7 @@
 
   <groupId>org.example</groupId>
   <artifactId>SpringbootTest</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
 
   <name>SpringbootTest</name>
@@ -23,6 +23,7 @@
     </dependency>
   </dependencies>
 
+
   <build>
     <plugins>
       <plugin>
@@ -36,6 +37,34 @@
             </manifest>
           </archive>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jfrog.buildinfo</groupId>
+        <artifactId>artifactory-maven-plugin</artifactId>
+        <version>3.2.3</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>build-info</id>
+            <goals>
+              <goal>publish</goal>
+            </goals>
+            <configuration>
+              <deployProperties>
+                <gradle>awesome</gradle>
+                <review.team>qa</review.team>
+              </deployProperties>
+              <publisher>
+                <contextUrl>http://localhost:8082/artifactory</contextUrl>
+                <username>admin</username>
+                <password>APAbmhRkZE6rqx1jrJKD1hJ5fHU</password>
+                <repoKey>test-local</repoKey>
+                <snapshotRepoKey>test-local-snapshots</snapshotRepoKey>
+              </publisher>
+            </configuration>
+          </execution>
+          </executions>
       </plugin>
     </plugins>
 
