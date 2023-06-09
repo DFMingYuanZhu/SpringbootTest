@@ -4,10 +4,10 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'echo build.....'
+        sh 'echo build 123.....'
+        sh 'echo build 456.....'
       }
     }
-
   }
 
   post {
@@ -19,5 +19,4 @@ pipeline {
       echo 'build failed!'
     }
   }
-
 }
