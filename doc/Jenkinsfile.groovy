@@ -3,4 +3,3 @@ retry(3) {
         echo "hello world {i}"
     }
 }
-parallel branches
