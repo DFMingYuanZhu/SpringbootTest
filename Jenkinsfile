@@ -31,6 +31,28 @@ pipeline {
           }
         }
  */
+
+      /*
+      stage("black duck scan") {
+      //Black Duck arguments
+         steps {
+             withCredentials([string(credentialsId: 'robot-black-duck-scan', variable: 'TOKEN')]) {
+                 //get Token by withCredentials
+                 synopsys_detect 'bash <(curl -s ${hub_detect}) \
+                         --blackduck.url=${blackduck_url} \
+                         --blackduck.username=${blackduck_user} \
+                         --blackduck.api.token=${TOKEN} \
+                         --detect.project.name=${detect_project} \
+                         --detect.project.version.name=${detect_project_version} \
+                         --detect.source.path=${detect_source_path} \
+                         --logging.level.com.synopsys.integration=debug \
+                         --blackduck.trust.cert=TRUE \
+                         --detect.blackduck.signature.scanner.snippet.matching=${SNIPPET-MODES}'
+             }
+         }
+      }
+       */
+      /*
     stage ('Sonarqube') {
         environment {
                 scannerHome = tool 'SonarQubeScanner'
@@ -45,18 +67,29 @@ pipeline {
                                 }
               }
            }
-    }
-
-
+    }*/
   }
 
   post {
-    success {
-      echo 'build success!'
-    }
 
-    failure {
-      echo 'build failed!'
-    }
+
+      success {
+          emailext (
+                  subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                  body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                    <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                  to: "zhumingyuan91@163.com",
+                  from: "mingyuanzhu20@gmail.com"
+          )
+      }
+      failure {
+          emailext (
+                  subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                  body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                    <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                  to: "zhumingyuan91@163.com",
+                  from: "mingyuanzhu20@gmail.com"
+          )
+      }
   }
 }
