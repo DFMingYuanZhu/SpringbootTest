@@ -16,7 +16,7 @@ pipeline {
     stage('Veracode Pipeline Scan') {
           steps {
             sh 'curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip'
-            sh 'unzip pipeline-scan-LATEST.zip pipeline-scan.jar'
+            sh 'unzip -o pipeline-scan-LATEST.zip pipeline-scan.jar'
             sh 'java -jar pipeline-scan.jar \
               --file "target/SpringbootTest-1.1.jar" \
               --fail_on_severity="Very High, High" \
