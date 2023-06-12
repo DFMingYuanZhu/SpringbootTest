@@ -1,7 +1,7 @@
 pipeline {
   agent any
   tools {
-          // 指定JDK版本
+          //set jdk version
           jdk 'jdk11'
       }
 
@@ -72,24 +72,16 @@ pipeline {
 
   post {
 
-
       success {
-          emailext (
-                  subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                  body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                    <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                  to: "zhumingyuan91@163.com",
-                  from: "mingyuanzhu20@gmail.com"
-          )
+          emailext(
+                  subject: '${PROJECT_NAME} Build Success！',
+                  to: 'xxx@xxx.com',
+                  body: '${PROJECT_NAME} Build Success！The body for more detail')
       }
       failure {
-          emailext (
-                  subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                  body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                    <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                  to: "zhumingyuan91@163.com",
-                  from: "mingyuanzhu20@gmail.com"
-          )
+          emailext(subject: '${PROJECT_NAME} Build Fail',
+                  to: 'xxx@xxx.com',
+                  body: '${PROJECT_NAME} Build Success！The body for more detail')
       }
   }
 }
