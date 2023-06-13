@@ -13,6 +13,38 @@ pipeline {
       }
     }
 
+      /**
+       * parameters {
+       choice(
+       name: 'VERSION',
+       choices: ['MVSURE_v1.1', 'MVSURE_v1.2', 'MVSURE_v2.2'],
+       description: 'Which version do you want scan on black duck? MVSURE_v1.1, MVSURE_v1.2 or others?')
+       choice(
+       name: 'REPO',
+       choices: ['blog-server', 'blog-client', 'blog-docker'],
+       description: 'Which repository code does above VERSION belong to?')
+       string(
+       name: 'BRANCH',
+       defaultValue: 'develop',
+       description: 'Which branch does above VERSION belong to?')
+       choice(
+       name: 'SNIPPET-MODES',
+       choices: ['SNIPPET_MATCHING', 'SNIPPET_MATCHING_ONLY', 'FULL_SNIPPET_MATCHING', 'FULL_SNIPPET_MATCHING_ONLY', 'NONE'],
+       description: 'What snippet scan mode do you want to choose?')
+       }
+
+       environment {
+       ROBOT                  = credentials("d1cbab74-823d-41aa-abb7-858485121212")
+       hub_detect             = 'https://blackducksoftware.github.io/hub-detect/hub-detect.sh'
+       blackduck_url          = 'https://yourcompany.blackducksoftware.com'
+       blackduck_user         = 'robot@yourcompany.com'
+       detect_project         = 'GITHUB'
+       detect_project_version = '${VERSION}'
+       detect_source_path     = '${WORKSPACE}/${REPO}/src'
+       }
+
+       */
+
     /* stage('Veracode Pipeline Scan') {
           steps {
             sh 'curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip'
